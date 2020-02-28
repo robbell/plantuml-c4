@@ -10,9 +10,15 @@ Additional features include or will include in future:
 ## Sample Context diagram
 ![Sample Context diagram](samples/sample-context.svg)
 
+## Related
+
+To add **PlantUML** diagram generation to your build pipeline, take a look at my [PlantUML in Docker](https://github.com/robbell/plantuml-docker) project.
+
 ## To do
 
+- [ ] Additional functions for remaining Context entities, and all other entities at the Container and Component level
+- [ ] Update current implementations to more closely resemble vanilla PlantUML syntax
 - [ ] Consider usage of `together` for grouping
 - [ ] Additional styling options https://plantuml.com/class-diagram#Skinparam
-- [ ] Relationship directions
+- [x] Relationship directions
 - [ ] Layout helpers
