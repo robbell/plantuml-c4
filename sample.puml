@@ -1,0 +1,25 @@
+@startuml Sample Context
+!include c4.puml
+
+System(web, "Web", "The front-end for non-mobile users", <<external>>)
+System(android, "Android", "The front-end for Android users", <<external>>)
+System(thirdPartyApp, "Third Party", "Apps from third parties", <<external>>)
+System(feeds, "Feeds", "External Feeds Aggregator", <<new>>)
+System(productInventory, "Product Inventory", "Provides product information", <<external>>)
+System(paymentProcessing, "Payment Processing", "Provides credit card processing", <<external>>)
+
+Boundary(eCommerceSystem, "eCommerce System", "System") {
+    System(customerOrders, "Customer Orders", "Manages customer orders")
+    System(offlineProcessor, "Offline Processor", "Handles backlogged orders", <<modified>>)
+}
+
+Rel(offlineProcessor, customerOrders, "Places customer orders offline", "HTTP via SDK", "-LEFT->")
+Rel(web, customerOrders, "Manages customer orders", "HTTP via SDK")
+Rel(android, customerOrders, "Manages customer orders", "HTTP via SDK")
+Rel(customerOrders, productInventory, "Gets product information", "JSON over HTTP")
+Rel(customerOrders, paymentProcessing, "Processes credit card transactions", "JSON over HTTP")
+Rel(thirdPartyApp, customerOrders, "Manages customer orders", "JSON over HTTP")
+Rel(thirdPartyApp, offlineProcessor, "Handles offline orders", "Service Bus")
+Rel(feeds, offlineProcessor, "Requests all items", "Service Bus")
+
+@enduml

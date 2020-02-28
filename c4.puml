@@ -1,5 +1,3 @@
-@startuml Context Example
-
 skinparam shadowing false
 skinparam defaultTextAlignment center
 skinparam wrapWidth 200
@@ -8,6 +6,7 @@ skinparam DefaultFontSize 12
 skinparam ArrowColor #111
 skinparam ArrowThickness 0.5
 skinparam ArrowFontSize 11
+skinparam maxMessageSize 150
 
 skinparam rectangle {
     BorderThickness 0
@@ -15,13 +14,16 @@ skinparam rectangle {
 
 !$PERSON_BG_COLOR = "#56B4E9"
 !$EXTERNAL_PERSON_BG_COLOR = "#56B4E9"
-!$SYSTEM_BG_COLOR = "#56B4E9"
+
 !$SYSTEM_FG_COLOR = "#FFFFFF"
-!$EXTERNAL_SYSTEM_BG_COLOR = "#56B4E9"
-!$NEW_SYSTEM_BG_COLOR = "#009E73"
 !$NEW_SYSTEM_FG_COLOR = "#FFFFFF"
-!$MODIFIED_SYSTEM_BG_COLOR = "#E69F00"
-!$REMOVED_SYSTEM_BG_COLOR = "#D55E00"
+!$BOUNDARY_FG_COLOR = "#333333"
+
+!$SYSTEM_BG_COLOR = "#1287A8"
+!$EXTERNAL_SYSTEM_BG_COLOR = "#0D3D56"
+!$NEW_SYSTEM_BG_COLOR = "#83B86C"
+!$MODIFIED_SYSTEM_BG_COLOR = "#C2571A"
+!$REMOVED_SYSTEM_BG_COLOR = "#AD2A1A"
 
 skinparam Legend {
   BackgroundColor White
@@ -48,36 +50,49 @@ skinparam rectangle<<removed>> {
     FontColor $MODIFIED_SYSTEM_FG_COLOR
 }
 
+skinparam rectangle<<external>> {
+    BackgroundColor $EXTERNAL_SYSTEM_BG_COLOR
+    FontColor $MODIFIED_SYSTEM_FG_COLOR
+}
+
+skinparam rectangle<<boundary>> {
+    BorderStyle dashed
+    BorderThickness 1
+    BorderColor $BOUNDARY_FG_COLOR
+    FontColor $BOUNDARY_FG_COLOR
+    BackgroundColor #FFF
+}
+
 hide stereotype
 legend right
-|=                         |= Type         |
+|=                          |= Type         |
 |<$SYSTEM_BG_COLOR>         | Existing      |
+|<$EXTERNAL_SYSTEM_BG_COLOR>| External      |
 |<$NEW_SYSTEM_BG_COLOR>     | New           |
 |<$MODIFIED_SYSTEM_BG_COLOR>| Modified      |
 |<$REMOVED_SYSTEM_BG_COLOR> | To be removed |
 endlegend
 
 !unquoted function System($alias, $label, $desc, $stereotype = "")
-rectangle "_Spacer()<size:14><b>$label</b></size>\n<size:9>[System]</size>\n_Spacer()$desc\n" <<system>> $stereotype as $alias
+rectangle "_Spacer()<size:16><b>$label</b></size>\n<size:9>[System]</size>\n_Spacer()$desc\n" $stereotype as $alias
 !endfunction
 
 !function _Spacer()
 !return "<size:5> </size>\n"
 !endfunction
 
-!unquoted function Rel($from, $to, $desc = "")
-$from ..> $to : "$desc"
+!unquoted function Rel($from, $to, $relationship, $tech, $line = "--->")
+_Rel($from, $to, "$relationship\n<i>[$tech]</i>", $line)
 !endfunction
 
-' Sample diagram
+!unquoted function Rel($from, $to, $relationship = "")
+_Rel($from, $to, "$relationship")
+!endfunction
 
-System(system1, "System 1", "Does something important")
-System(system2, "System 2", "Does something else important", <<new>>)
-System(system3, "System 3", "Not sure what this does", <<modified>>) 
-System(system4, "System 4", "Something else altogether", <<removed>>) 
+!unquoted function _Rel($from, $to, $label = "", $line = "--->")
+$from $line $to : "$label"
+!endfunction
 
-Rel(system1, system2, "Does something")
-Rel(system1, system3)
-Rel(system1, system4)
-
-@enduml
+!unquoted function Boundary($alias, $name, $type)
+rectangle "$name\n[$type]" <<boundary>>
+!endfunction
