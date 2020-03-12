@@ -10,7 +10,7 @@ Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNi
 
 ## Sample Context diagram
 
-Source: [sample.puml]()
+Source: [sample.puml](sample.puml)
 
 ![Sample Context diagram](samples/sample-context.svg)
 
