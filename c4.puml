@@ -30,6 +30,10 @@ skinparam Legend {
   BorderThickness 0
 }
 
+skinparam rectangle<<person>> {
+    roundCorner 50
+}
+
 skinparam rectangle {
     BackgroundColor $SYSTEM_BG_COLOR
     FontColor $SYSTEM_FG_COLOR
@@ -60,7 +64,7 @@ skinparam rectangle<<boundary>> {
     BorderThickness 1
     BorderColor $BOUNDARY_FG_COLOR
     FontColor $BOUNDARY_FG_COLOR
-    BackgroundColor #FFF
+    BackgroundColor transparent
 }
 
 hide stereotype
@@ -96,3 +100,5 @@ $from $line $to : "$label"
 !unquoted function Boundary($alias, $name, $type)
 rectangle "$name\n[$type]" <<boundary>>
 !endfunction
+
+!function Tech($tech) return "\n<i>[" + $tech + "]</i>" 
