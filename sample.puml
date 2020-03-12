@@ -1,6 +1,7 @@
 @startuml Sample Context
 !include c4.puml
 
+System(person, "Person", "The front-end for non-mobile users", <<person>>)
 System(web, "Web", "The front-end for non-mobile users", <<external>>)
 System(android, "Android", "The front-end for Android users", <<external>>)
 System(thirdPartyApp, "Third Party", "Apps from third parties", <<external>>)
@@ -13,13 +14,20 @@ Boundary(eCommerceSystem, "eCommerce System", "System") {
     System(offlineProcessor, "Offline Processor", "Handles backlogged orders", <<modified>>)
 }
 
-Rel(offlineProcessor, customerOrders, "Places customer orders offline", "HTTP via SDK", "-LEFT->")
-Rel(web, customerOrders, "Manages customer orders", "HTTP via SDK")
-Rel(android, customerOrders, "Manages customer orders", "HTTP via SDK")
-Rel(customerOrders, productInventory, "Gets product information", "JSON over HTTP")
-Rel(customerOrders, paymentProcessing, "Processes credit card transactions", "JSON over HTTP")
-Rel(thirdPartyApp, customerOrders, "Manages customer orders", "JSON over HTTP")
-Rel(thirdPartyApp, offlineProcessor, "Handles offline orders", "Service Bus")
-Rel(feeds, offlineProcessor, "Requests all items", "Service Bus")
+' Relationships work in the same was as those in PlantUML's core class diagrams: https://plantuml.com/class-diagram
+web --> customerOrders : Manages customer orders
+android --> customerOrders : Manages customer orders
+
+' The Tech() helper is included to add C4-style relationship labelling
+customerOrders --> paymentProcessing : Processes credit card transactions Tech("JSON over HTTP")
+thirdPartyApp --> customerOrders : Manages customer orders Tech("JSON over HTTP")
+thirdPartyApp --> offlineProcessor : Handles offline orders Tech("Service Bus")
+
+' Make use of PlantUML's additional relationship and layout options
+offlineProcessor -LEFT-> customerOrders : Places customer orders offline Tech("HTTP via SDK")
+customerOrders ..> productInventory : Gets product information asynchronously Tech("JSON over HTTP")
+feeds -LEFT-> offlineProcessor : Requests all items Tech("Service Bus")
+person -RIGHT-> customerOrders : Places orders Tech("HTTP")
+web -[hidden]D-> person
 
 @enduml
