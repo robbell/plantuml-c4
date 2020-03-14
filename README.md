@@ -1,6 +1,6 @@
 # PlantUML template for C4 diagrams
 
-Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNiepel/C4-PlantUML) by Ricardo Niepel, this [PlantUML](https://plantuml.com/) template includes styling similar to that used by the [C4 samples](https://c4model.com/#CoreDiagrams) and [Structurizr](https://structurizr.com/), and maintains a close relationship to the PlantUML core syntax.
+Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNiepel/C4-PlantUML) by Ricardo Niepel, this C4 [PlantUML](https://plantuml.com/) template includes styling similar to that used by the [C4 samples](https://c4model.com/#CoreDiagrams) and [Structurizr](https://structurizr.com/), and maintains a close relationship to the PlantUML core syntax.
 
 ## Key features
 
@@ -8,11 +8,17 @@ Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNi
 * Relationship styling and flexibility enabling better control of layout
 * A single include file - simple to reference or modify
 
-## Sample Context diagram
+## Sample Component diagram
 
-Source: [sample.puml](sample.puml)
+Source: [sample.puml](samples/pet-clinic-sample.puml)
 
-![Sample Context diagram](samples/sample-context.svg)
+![Sample Context diagram](samples/pet-clinic-sample.svg)
+
+## Sample entity usage
+
+Source: [sample.puml](samples/entities-sample.puml)
+
+![Sample Context diagram](samples/entities-sample.svg)
 
 ## Related
 
@@ -20,9 +26,8 @@ To add **PlantUML** diagram generation to your build pipelines, take a look at m
 
 ## To do
 
-- [ ] Additional functions for remaining Context entities, and all other entities at the Container and Component level
-- [ ] Update current implementations to more closely resemble vanilla PlantUML syntax
-- [ ] Additional styling options https://plantuml.com/class-diagram#Skinparam
-- [ ] Layout helpers `together`
+- [ ] Continued refactoring
+- [x] Additional functions for remaining Context entities, and all other entities at the Container and Component level
+- [x] Update current implementations to more closely resemble vanilla PlantUML syntax
 - [x] Relationship directions
 - [x] Layout helpers using -[hidden]->
