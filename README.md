@@ -10,15 +10,15 @@ Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNi
 
 ## Sample Component diagram
 
-Source: [sample.puml](samples/pet-clinic-sample.puml)
+Source: [samples/pet-clinic-sample.puml](samples/pet-clinic-sample.puml)
 
-![Sample Context diagram](samples/pet-clinic-sample.svg)
+![Sample Component diagram](samples/pet-clinic-sample.svg)
 
 ## Sample entity usage
 
-Source: [sample.puml](samples/entities-sample.puml)
+Source: [samples/entities-sample.puml](samples/entities-sample.puml)
 
-![Sample Context diagram](samples/entities-sample.svg)
+![Sample entity usage](samples/entities-sample.svg)
 
 ## Related
 
