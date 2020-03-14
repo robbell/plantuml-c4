@@ -1,0 +1,29 @@
+@startuml Entities sample
+!include c4.puml
+
+' Entity samples, including: Person, System, Container, Component, Database and Boundary
+Boundary("A boundary", "And its type"){
+    Person("A person", "A business user") as person 
+    Person("Other person", "With a different description", "External Person") <<modified>> as otherPerson
+
+    System("A system", "Some system") as system
+    System("Other system", "With a different description", "External system") as otherSystem
+}
+
+Container("A container", "My container") as container
+Container("Other container", "With a tech description", "HTTP API") <<new>> as otherContainer 
+
+Component("A component", "Some component") as component
+Component("Other component", "With a tech description", "ASP.NET WebAPI") as otherComponent
+
+Database("A database", "My database description") as database
+Database("Other database", "With a tech description", "MySQL") <<external>> as otherDatabase  
+
+' Relationship examples. For more information: https://plantuml.com/class-diagram
+person --> otherPerson : My relationship
+system ..> otherSystem : Another relationship
+container <-- otherContainer : With tech description Tech("JSON over HTTP")
+component ..> otherComponent : An async relationship
+database --> otherDatabase
+
+@enduml

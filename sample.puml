@@ -1,33 +1,45 @@
-@startuml Sample Context
+@startuml Component diagram for Spring PetClinic - Web Application
 !include c4.puml
 
-System(person, "Person", "The front-end for non-mobile users", <<person>>)
-System(web, "Web", "The front-end for non-mobile users", <<external>>)
-System(android, "Android", "The front-end for Android users", <<external>>)
-System(thirdPartyApp, "Third Party", "Apps from third parties", <<external>>)
-System(feeds, "Feeds", "External Feeds Aggregator", <<new>>)
-System(productInventory, "Product Inventory", "Provides product information", <<external>>)
-System(paymentProcessing, "Payment Processing", "Provides credit card processing", <<external>>)
+Person("Clinic employee", "An employee of the clinic") as clinicEmployee
 
-Boundary(eCommerceSystem, "eCommerce System", "System") {
-    System(customerOrders, "Customer Orders", "Manages customer orders")
-    System(offlineProcessor, "Offline Processor", "Handles backlogged orders", <<modified>>)
+Boundary("Web Application", "Container"){
+    Component("VetController", "", "Spring MVC Controller") as vetController
+    Component("VisitController", "", "Spring MVC Controller") as visitController
+    Component("PetController", "", "Spring MVC Controller") as petController
+    Component("VisitController", "", "Spring MVC Controller") as ownerController
+    Component("VisitController", "Controller used to showcase what happens when an exception is thrown", "Spring MVC Controller") as crashController
+
+    ' Inline colouring
+    Component("ClinicService", "Mostly used as a facade so all controllers have a single entry point", "Spring Service") as clinicService #095166
+
+    Component("VetRepository", "Repository class for domain objects. All method names are compliant with Sprin Data conventions", "Spring MVC Controller") as vetRepository
+    Component("VisitRepository", "Repository class for domain objects. All method names are compliant with Sprin Data conventions", "Spring MVC Controller") as visitRepository
+    Component("PetRepository", "Repository class for domain objects. All method names are compliant with Sprin Data conventions", "Spring MVC Controller") as petRepository
+    Component("VisitRepository", "Repository class for domain objects. All method names are compliant with Sprin Data conventions", "Spring MVC Controller") as ownerRepository
 }
 
-' Relationships work in the same was as those in PlantUML's core class diagrams: https://plantuml.com/class-diagram
-web --> customerOrders : Manages customer orders
-android --> customerOrders : Manages customer orders
+Database("A database", "Stores information regarding the veterinarians, the clients and their pets", "Relational database schema") as database
 
-' The Tech() helper is included to add C4-style relationship labelling
-customerOrders --> paymentProcessing : Processes credit card transactions Tech("JSON over HTTP")
-thirdPartyApp --> customerOrders : Manages customer orders Tech("JSON over HTTP")
-thirdPartyApp --> offlineProcessor : Handles offline orders Tech("Service Bus")
+clinicEmployee ..> vetController : Uses Tech("HTTP")
+clinicEmployee ..> visitController : Uses Tech("HTTP")
+clinicEmployee ..> petController : Uses Tech("HTTP")
+clinicEmployee ..> ownerController : Uses Tech("HTTP")
+clinicEmployee ..> crashController : Uses Tech("HTTP")
 
-' Make use of PlantUML's additional relationship and layout options
-offlineProcessor -LEFT-> customerOrders : Places customer orders offline Tech("HTTP via SDK")
-customerOrders ..> productInventory : Gets product information asynchronously Tech("JSON over HTTP")
-feeds -LEFT-> offlineProcessor : Requests all items Tech("Service Bus")
-person -RIGHT-> customerOrders : Places orders Tech("HTTP")
-web -[hidden]D-> person
+vetController ..> clinicService
+visitController ..> clinicService
+petController ..> clinicService
+ownerController ..> clinicService
+crashController ..> clinicService
 
+clinicService ..> vetRepository
+clinicService ..> visitRepository
+clinicService ..> petRepository
+clinicService ..> ownerRepository
+
+vetRepository ..> database : Reads from and writes to Tech("jDBC")
+visitRepository ..> database : Reads from and writes to Tech("jDBC")
+petRepository ..> database : Reads from and writes to Tech("jDBC")
+ownerRepository ..> database : Reads from and writes to Tech("jDBC")
 @enduml

@@ -1,104 +1,112 @@
+!$FG_COLOR = "#FFFFFF"
+!$BG_COLOR = "#1287A8"
+!$BG_COLOR_ACCENT = "#0d6882"
+!$LINE_FG_COLOR = "#333333"
+!$EXTERNAL_BG_COLOR = "#0D3D56"
+!$NEW_BG_COLOR = "#83B86C"
+!$MODIFIED_BG_COLOR = "#C2571A"
+!$REMOVED_BG_COLOR = "#AD2A1A"
+
+hide stereotype
 skinparam shadowing false
 skinparam defaultTextAlignment center
 skinparam wrapWidth 200
 skinparam DefaultFontName Segoe UI
 skinparam DefaultFontSize 12
-skinparam ArrowColor #111
+skinparam ArrowColor $LINE_FG_COLOR
 skinparam ArrowThickness 0.5
 skinparam ArrowFontSize 11
 skinparam maxMessageSize 150
-
-skinparam rectangle {
-    BorderThickness 0
-}
-
-!$PERSON_BG_COLOR = "#56B4E9"
-!$EXTERNAL_PERSON_BG_COLOR = "#56B4E9"
-
-!$SYSTEM_FG_COLOR = "#FFFFFF"
-!$NEW_SYSTEM_FG_COLOR = "#FFFFFF"
-!$BOUNDARY_FG_COLOR = "#333333"
-
-!$SYSTEM_BG_COLOR = "#1287A8"
-!$EXTERNAL_SYSTEM_BG_COLOR = "#0D3D56"
-!$NEW_SYSTEM_BG_COLOR = "#83B86C"
-!$MODIFIED_SYSTEM_BG_COLOR = "#C2571A"
-!$REMOVED_SYSTEM_BG_COLOR = "#AD2A1A"
-
-skinparam Legend {
-  BackgroundColor White
-  BorderThickness 0
-}
 
 skinparam rectangle<<person>> {
     roundCorner 50
 }
 
 skinparam rectangle {
-    BackgroundColor $SYSTEM_BG_COLOR
-    FontColor $SYSTEM_FG_COLOR
+    BorderThickness 0
+    FontColor $FG_COLOR
+    BackgroundColor $BG_COLOR
+    BackgroundColor<<new>> $NEW_BG_COLOR
+    BackgroundColor<<modified>> $MODIFIED_BG_COLOR
+    BackgroundColor<<removed>> $REMOVED_BG_COLOR
+    BackgroundColor<<external>> $EXTERNAL_BG_COLOR
 }
 
-skinparam rectangle<<new>> {
-    BackgroundColor $NEW_SYSTEM_BG_COLOR
-    FontColor $NEW_SYSTEM_FG_COLOR
-}
-
-skinparam rectangle<<modified>> {
-    BackgroundColor $MODIFIED_SYSTEM_BG_COLOR
-    FontColor $MODIFIED_SYSTEM_FG_COLOR
-}
-
-skinparam rectangle<<removed>> {
-    BackgroundColor $REMOVED_SYSTEM_BG_COLOR
-    FontColor $MODIFIED_SYSTEM_FG_COLOR
-}
-
-skinparam rectangle<<external>> {
-    BackgroundColor $EXTERNAL_SYSTEM_BG_COLOR
-    FontColor $MODIFIED_SYSTEM_FG_COLOR
+skinparam database {
+    BorderColor $BG_COLOR_ACCENT
+    FontColor $FG_COLOR
+    BackgroundColor $BG_COLOR
+    BackgroundColor<<new>> $NEW_BG_COLOR
+    BackgroundColor<<modified>> $MODIFIED_BG_COLOR
+    BackgroundColor<<removed>> $REMOVED_BG_COLOR
+    BackgroundColor<<external>> $EXTERNAL_BG_COLOR
 }
 
 skinparam rectangle<<boundary>> {
     BorderStyle dashed
-    BorderThickness 1
-    BorderColor $BOUNDARY_FG_COLOR
-    FontColor $BOUNDARY_FG_COLOR
+    BorderThickness 0.5
+    BorderColor $LINE_FG_COLOR
+    FontColor $LINE_FG_COLOR
     BackgroundColor transparent
 }
 
-hide stereotype
+skinparam Legend {
+    BackgroundColor White
+    BorderThickness 0
+}
+
 legend right
-|=                          |= Type         |
-|<$SYSTEM_BG_COLOR>         | Existing      |
-|<$EXTERNAL_SYSTEM_BG_COLOR>| External      |
-|<$NEW_SYSTEM_BG_COLOR>     | New           |
-|<$MODIFIED_SYSTEM_BG_COLOR>| Modified      |
-|<$REMOVED_SYSTEM_BG_COLOR> | To be removed |
+|=                   |= Type         |
+|<$BG_COLOR>         | Existing      |
+|<$EXTERNAL_BG_COLOR>| External      |
+|<$NEW_BG_COLOR>     | New           |
+|<$MODIFIED_BG_COLOR>| Modified      |
+|<$REMOVED_BG_COLOR> | To be removed |
 endlegend
 
-!unquoted function System($alias, $label, $desc, $stereotype = "")
-rectangle "_Spacer()<size:16><b>$label</b></size>\n<size:9>[System]</size>\n_Spacer()$desc\n" $stereotype as $alias
+!function Boundary($name, $type)
+rectangle "_Spacer()<size:12>$name</size>\n<size:9>[$type]</size>" <<boundary>>
 !endfunction
 
-!function _Spacer()
-!return "<size:5> </size>\n"
+!function Person($label, $desc, $type = "Person")
+rectangle _EntityBody($label, $desc, $type) <<person>>
 !endfunction
 
-!unquoted function Rel($from, $to, $relationship, $tech, $line = "--->")
-_Rel($from, $to, "$relationship\n<i>[$tech]</i>", $line)
+!function System($label, $desc, $type = "Software System")
+rectangle _EntityBody($label, $desc, $type)
 !endfunction
 
-!unquoted function Rel($from, $to, $relationship = "")
-_Rel($from, $to, "$relationship")
+!function Container($label, $desc)
+rectangle _EntityBody($label, $desc, "Container")
 !endfunction
 
-!unquoted function _Rel($from, $to, $label = "", $line = "--->")
-$from $line $to : "$label"
+!function Container($label, $desc, $tech)
+!$type = "Container: " + $tech
+rectangle _EntityBody($label, $desc, $type)
 !endfunction
 
-!unquoted function Boundary($alias, $name, $type)
-rectangle "$name\n[$type]" <<boundary>>
+!function Component($label, $desc)
+rectangle _EntityBody($label, $desc, "Component")
 !endfunction
 
-!function Tech($tech) return "\n<i>[" + $tech + "]</i>" 
+!function Component($label, $desc, $tech)
+!$type = "Component: " + $tech
+rectangle _EntityBody($label, $desc, $type)
+!endfunction
+
+!function Database($label, $desc)
+database _EntityBody($label, $desc, "Database")
+!endfunction
+
+!function Database($label, $desc, $tech)
+!$type = "Database: " + $tech
+database _EntityBody($label, $desc, $type)
+!endfunction
+
+!function Tech($tech) return "\n<i>[" + $tech + "]</i>"
+
+!function _EntityBody($label, $desc, $type)
+"_Spacer()<size:16><b>$label</b></size>\n<size:9>[$type]</size>\n_Spacer()$desc\n"
+!endfunction
+
+!function _Spacer() return "<size:5> </size>\n"
