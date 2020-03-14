@@ -1,5 +1,5 @@
 @startuml Entities sample
-!include c4.puml
+!include https://raw.githubusercontent.com/robbell/plantuml-c4/v1.0/c4.puml
 
 ' Entity samples, including: Person, System, Container, Component, Database and Boundary
 Boundary("A boundary", "And its type"){

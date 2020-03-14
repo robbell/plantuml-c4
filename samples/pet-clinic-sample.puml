@@ -1,5 +1,5 @@
 @startuml Component diagram for Spring PetClinic - Web Application
-!include c4.puml
+!include https://raw.githubusercontent.com/robbell/plantuml-c4/v1.0/c4.puml
 
 Person("Clinic employee", "An employee of the clinic") as clinicEmployee
 
