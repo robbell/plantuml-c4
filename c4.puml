@@ -11,7 +11,6 @@ hide stereotype
 skinparam shadowing false
 skinparam defaultTextAlignment center
 skinparam wrapWidth 200
-skinparam DefaultFontName Segoe UI
 skinparam DefaultFontSize 12
 skinparam ArrowColor $LINE_FG_COLOR
 skinparam ArrowThickness 0.5
