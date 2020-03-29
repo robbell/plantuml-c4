@@ -5,7 +5,7 @@ Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNi
 ## Key features
 
 * C4 and Structurizr styling
-* Relationship styling and flexibility enabling better control of layout
+* Complementary C4 helpers, build on top of standard PlantUML relationships
 * A single include file - simple to reference or modify
 
 ## Getting started
