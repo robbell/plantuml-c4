@@ -63,49 +63,49 @@ legend right
 |<$REMOVED_BG_COLOR> | To be removed |
 endlegend
 
-!function Boundary($name, $type)
+!procedure Boundary($name, $type)
 rectangle "_Spacer()<size:12>$name</size>\n<size:9>[$type]</size>" <<boundary>>
-!endfunction
+!endprocedure
 
-!function Person($label, $desc, $type = "Person")
+!procedure Person($label, $desc, $type = "Person")
 rectangle _EntityBody($label, $desc, $type) <<person>>
-!endfunction
+!endprocedure
 
-!function System($label, $desc, $type = "Software System")
+!procedure System($label, $desc, $type = "Software System")
 rectangle _EntityBody($label, $desc, $type)
-!endfunction
+!endprocedure
 
-!function Container($label, $desc)
+!procedure Container($label, $desc)
 rectangle _EntityBody($label, $desc, "Container")
-!endfunction
+!endprocedure
 
-!function Container($label, $desc, $tech)
+!procedure Container($label, $desc, $tech)
 !$type = "Container: " + $tech
 rectangle _EntityBody($label, $desc, $type)
-!endfunction
+!endprocedure
 
-!function Component($label, $desc)
+!procedure Component($label, $desc)
 rectangle _EntityBody($label, $desc, "Component")
-!endfunction
+!endprocedure
 
-!function Component($label, $desc, $tech)
+!procedure Component($label, $desc, $tech)
 !$type = "Component: " + $tech
 rectangle _EntityBody($label, $desc, $type)
-!endfunction
+!endprocedure
 
-!function Database($label, $desc)
+!procedure Database($label, $desc)
 database _EntityBody($label, $desc, "Database")
-!endfunction
+!endprocedure
 
-!function Database($label, $desc, $tech)
+!procedure Database($label, $desc, $tech)
 !$type = "Database: " + $tech
 database _EntityBody($label, $desc, $type)
-!endfunction
+!endprocedure
 
 !function Tech($tech) return "\n<i>[" + $tech + "]</i>"
 
-!function _EntityBody($label, $desc, $type)
+!procedure _EntityBody($label, $desc, $type)
 "_Spacer()<size:16><b>$label</b></size>\n<size:9>[$type]</size>\n_Spacer()$desc\n"
-!endfunction
+!endprocedure
 
 !function _Spacer() return "<size:5> </size>\n"
