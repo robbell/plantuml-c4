@@ -49,6 +49,7 @@ skinparam rectangle<<boundary>> {
     BackgroundColor transparent
 }
 
+!procedure ShowLegend()
 skinparam Legend {
     BackgroundColor White
     BorderThickness 0
@@ -62,6 +63,7 @@ legend right
 |<$MODIFIED_BG_COLOR>| Modified      |
 |<$REMOVED_BG_COLOR> | To be removed |
 endlegend
+!endprocedure
 
 !procedure Boundary($name, $type)
 rectangle "_Spacer()<size:12>$name</size>\n<size:9>[$type]</size>" <<boundary>>
