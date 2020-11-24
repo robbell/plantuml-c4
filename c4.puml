@@ -49,7 +49,6 @@ skinparam rectangle<<boundary>> {
     BackgroundColor transparent
 }
 
-!procedure ShowLegend()
 skinparam Legend {
     BackgroundColor White
     BorderThickness 0
