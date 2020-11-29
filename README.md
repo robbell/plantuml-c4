@@ -12,13 +12,13 @@ Taking inspiration from the [PlantUML C4 templates](https://github.com/RicardoNi
 
 Include the line below at the beginning of your PlantUML file, under the `@startuml` directive:
 
-    !include https://raw.githubusercontent.com/robbell/plantuml-c4/v1.1/c4.puml
+    !include https://raw.githubusercontent.com/robbell/plantuml-c4/v1.4/c4.puml
 
 ### Example
 
 ```
 @startuml Sample Context diagram 
-!include https://raw.githubusercontent.com/robbell/plantuml-c4/v1.1/c4.puml
+!include https://raw.githubusercontent.com/robbell/plantuml-c4/v1.4/c4.puml
 
 Person("Clinic employee", "An employee of the clinic") as clinicEmployee
 System("Pet Clinic Application", "System for managing vet appointments") as petClinicSystem
